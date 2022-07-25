@@ -4,14 +4,16 @@ using FitnessWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitnessWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220721101249_AddUsersTable")]
+    partial class AddUsersTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,35 +45,6 @@ namespace FitnessWebAPI.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("FitnessWebAPI.Models.SubCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("InsertedBy")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("InsertedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SubCategoryName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Visible")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("SubCategories");
-                });
-
             modelBuilder.Entity("FitnessWebAPI.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -100,15 +73,6 @@ namespace FitnessWebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("FitnessWebAPI.Models.SubCategory", b =>
-                {
-                    b.HasOne("FitnessWebAPI.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

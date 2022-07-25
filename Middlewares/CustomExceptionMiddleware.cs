@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -13,14 +11,14 @@ namespace FitnessWebAPI.Middlewares
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger logger;
-        private readonly IHostEnvironment hostEnvironment;
+        private readonly ILogger _logger;
+        private readonly IHostEnvironment _hostEnvironment;
 
-        public CustomExceptionMiddleware(RequestDelegate next, ILogger logger, IHostEnvironment hostEnvironment)
+        public CustomExceptionMiddleware(RequestDelegate next, ILogger<CustomExceptionMiddleware> logger, IHostEnvironment hostEnvironment)
         {
             _next = next;
-            this.logger = logger;
-            this.hostEnvironment = hostEnvironment;
+            _logger = logger;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task Invoke(HttpContext context)
@@ -46,7 +44,7 @@ namespace FitnessWebAPI.Middlewares
                     message = "We are working in the backend please wait and try after sometime!";
                     statusCode = (int)HttpStatusCode.InternalServerError;
                 }
-                if (hostEnvironment.IsDevelopment())
+                if (_hostEnvironment.IsDevelopment())
                 {
                     apiError = new ApiError(statusCode, ex.Message, ex.StackTrace.ToString());
                 }
@@ -55,7 +53,7 @@ namespace FitnessWebAPI.Middlewares
                     apiError = new ApiError(statusCode, message, null);
                 }
 
-                logger.LogError(ex, ex.Message);
+                _logger.LogError(ex, ex.Message);
                 context.Response.StatusCode = statusCode;
 
                 await context.Response.WriteAsync(apiError.ToString());

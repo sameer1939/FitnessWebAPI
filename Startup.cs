@@ -1,12 +1,14 @@
+using AutoMapper;
 using FitnessWebAPI.Data;
 using FitnessWebAPI.Data.IRepository;
 using FitnessWebAPI.Data.Repository;
+using FitnessWebAPI.Helpers;
+using FitnessWebAPI.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace FitnessWebAPI
 {
@@ -25,16 +27,14 @@ namespace FitnessWebAPI
             services.AddControllers();
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("FitnessConnection")));
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            app.UseMiddleware<CustomExceptionMiddleware>();
 
             app.UseRouting();
             app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());

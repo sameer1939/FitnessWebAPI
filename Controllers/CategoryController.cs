@@ -11,33 +11,54 @@ namespace FitnessWebAPI.Controllers
     
     public class CategoryController : BaseController
     {
-        private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(ICategoryRepository categoryRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _categoryRepository = categoryRepository;
+            _unitOfWork = unitOfWork;
         }
         [HttpPost("add")]
         public IActionResult AddCategory(Category category)
         {
-            if (category.Visible == null)
-                category.Visible = false;
             category.InsertedDate = DateTime.Now;
             category.InsertedBy = 1;
-            _categoryRepository.AddCategory(category);
+            _unitOfWork.CategoryRepository.AddCategory(category);
+            _unitOfWork.SaveChanges();
             return Ok();
         }
+
+        [HttpPut("update")]
+        public IActionResult UpdateCategory(Category category)
+        {
+            _unitOfWork.CategoryRepository.UpdateCategory(category);
+            _unitOfWork.SaveChanges();
+            return Ok();
+        }
+
         [HttpGet("bindcategory")]
         public IActionResult CategoryList()
         {
-            var result = _categoryRepository.CategoryList();
+            var result = _unitOfWork.CategoryRepository.CategoryList();
+            return Ok(result);
+        }
+        [HttpGet("bindVisibleCategory")]
+        public IActionResult BindVisibleCategory()
+        {
+            var result = _unitOfWork.CategoryRepository.BindVisibleCategory();
             return Ok(result);
         }
 
         [HttpDelete("deletecategory/{id}")]
-        public IActionResult CategoryList(int id)
+        public IActionResult DeleteCategory(int id)
         {
-            _categoryRepository.DeleteCategory(id);
+            _unitOfWork.CategoryRepository.DeleteCategory(id);
+            _unitOfWork.SaveChanges();
             return Ok();
+        }
+        [HttpGet("categoryById/{id}")]
+        public IActionResult CategoryById(int id)
+        {
+            var result = _unitOfWork.CategoryRepository.GetCategoryById(id);
+            return Ok(result);
         }
     }
 }
