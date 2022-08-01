@@ -14,5 +14,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\ArticleImages\" />
+  </ItemGroup>
+
 
 </Project>
