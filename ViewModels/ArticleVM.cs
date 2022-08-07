@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FitnessWebAPI.Models
+namespace FitnessWebAPI.ViewModels
 {
-    public class Article : BaseEntity
+    public class ArticleVM
     {
-        public int CategoryId { get; set; }
-        public int SubCategoryId { get; set; }
-        public string HeadingName { get; set; }
+        public int Id { get; set; }
+        public string CategoryName { get; set; }
+        public string SubCategoryName { get; set; }
+        public string Heading { get; set; }
         public string ShortArticle { get; set; }
         public string ArticleInEnglish { get; set; }
         public string ArticleInHindi { get; set; }
         public string Image { get; set; }
         public bool Visible { get; set; }
-        public SubCategory SubCategory { get; set; }
     }
 }

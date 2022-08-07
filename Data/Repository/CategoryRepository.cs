@@ -32,7 +32,7 @@ namespace FitnessWebAPI.Data.Repository
         }
         public IEnumerable<Category> BindVisibleCategory()
         {
-            return _db.Categories.Where(x=>x.Visible==true);
+            return _db.Categories.Where(x=>x.Visible==true).OrderBy(x => x.DisplayOrder);
         }
 
         public void DeleteCategory(int id)

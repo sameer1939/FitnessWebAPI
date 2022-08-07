@@ -4,5 +4,6 @@
     {
         public string Name { get; set; }
         public bool? Visible { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }

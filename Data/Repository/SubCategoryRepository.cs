@@ -55,5 +55,9 @@ namespace FitnessWebAPI.Data.Repository
             cat.Visible = category.Visible;
             _db.SubCategories.Update(cat);
         }
+        public async Task<List<SubCategory>> GetSubCategoryByCategoryId(int id)
+        {
+            return await _db.SubCategories.Where(x=>x.CategoryId==id && x.Visible==true).ToListAsync();
+        }
     }
 }

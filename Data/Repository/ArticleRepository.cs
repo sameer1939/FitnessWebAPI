@@ -1,5 +1,6 @@
 ﻿using FitnessWebAPI.Data.IRepository;
 using FitnessWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,25 +21,16 @@ namespace FitnessWebAPI.Data.Repository
         }
         public void UpdateArticle(Article article)
         {
-            var art = GetArticleById(article.Id);
-            art.CategoryId = article.CategoryId;
-            art.SubCategoryId = article.SubCategoryId;
-            art.HeadingName = article.HeadingName;
-            art.ShortArticle = article.ShortArticle;
-            art.Image = article.Image;
-            art.ArticleInEnglish = article.ArticleInEnglish;
-            art.ArticleInHindi = article.ArticleInHindi;
-            art.Visible = article.Visible;
-            _db.Articles.Update(art);
+            _db.Articles.Update(article);
         }
 
         public IEnumerable<Article> ArticleList()
         {
-            return _db.Articles.ToList();
+            return _db.Articles.Include(x => x.SubCategory).ThenInclude(x => x.Category).ToList();
         }
         public IEnumerable<Article> BindVisibleArticle()
         {
-            return _db.Articles.Where(x=>x.Visible==true);
+            return _db.Articles.Where(x => x.Visible == true);
         }
 
         public void DeleteArticle(int id)
@@ -50,6 +42,14 @@ namespace FitnessWebAPI.Data.Repository
         public Article GetArticleById(int id)
         {
             return _db.Articles.Find(id);
+        }
+        public IEnumerable<Article> BindVisibleArticleFrontend(int catId)
+        {
+            //return _db.Articles.Include(x => x.SubCategory).ThenInclude(x => x.Category).Where(x => x.CategoryId == catId).ToList();
+            if (catId == 0)
+                return _db.Articles.Where(x => x.Visible == true).ToList();
+            else
+                return _db.Articles.Where(x => x.CategoryId == catId && x.Visible == true).ToList();
         }
     }
 }

@@ -14,5 +14,6 @@ namespace FitnessWebAPI.Data.IRepository
         IEnumerable<Article> BindVisibleArticle();
         Article GetArticleById(int id);
         void DeleteArticle(int id);
+        IEnumerable<Article> BindVisibleArticleFrontend(int catId);
     }
 }

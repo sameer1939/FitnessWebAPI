@@ -35,7 +35,7 @@ namespace FitnessWebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMiddleware<CustomExceptionMiddleware>();
-
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
 

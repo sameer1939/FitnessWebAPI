@@ -66,5 +66,11 @@ namespace FitnessWebAPI.Controllers
             var result = _unitOfWork.SubCategoryRepository.GetSubCategoryById(id);
             return Ok(result);
         }
+        [HttpGet("getbyCategoryId/{id}")]
+        public async Task<IActionResult> GetSubCategoryByCategoryId(int id)
+        {
+            var result = await _unitOfWork.SubCategoryRepository.GetSubCategoryByCategoryId(id);
+            return Ok(result);
+        }
     }
 }
