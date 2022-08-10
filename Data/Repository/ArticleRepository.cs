@@ -30,7 +30,7 @@ namespace FitnessWebAPI.Data.Repository
         }
         public IEnumerable<Article> BindVisibleArticle()
         {
-            return _db.Articles.Where(x => x.Visible == true);
+            return _db.Articles.Where(x => x.Visible == true).Include(x => x.SubCategory).ThenInclude(x => x.Category).ToList();
         }
 
         public void DeleteArticle(int id)
@@ -47,9 +47,9 @@ namespace FitnessWebAPI.Data.Repository
         {
             //return _db.Articles.Include(x => x.SubCategory).ThenInclude(x => x.Category).Where(x => x.CategoryId == catId).ToList();
             if (catId == 0)
-                return _db.Articles.Where(x => x.Visible == true).ToList();
+                return _db.Articles.Where(x => x.Visible == true).Include(x => x.SubCategory).ThenInclude(x => x.Category).ToList();
             else
-                return _db.Articles.Where(x => x.CategoryId == catId && x.Visible == true).ToList();
+                return _db.Articles.Where(x => x.CategoryId == catId && x.Visible == true).Include(x => x.SubCategory).ThenInclude(x => x.Category).ToList();
         }
     }
 }

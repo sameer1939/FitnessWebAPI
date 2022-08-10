@@ -72,5 +72,11 @@ namespace FitnessWebAPI.Controllers
             var result = await _unitOfWork.SubCategoryRepository.GetSubCategoryByCategoryId(id);
             return Ok(result);
         }
+        [HttpGet("bindRandomVisibleSubCategory/{records}")]
+        public IActionResult BindRandomVisibleSubCategory(int records)
+        {
+            var result = _unitOfWork.SubCategoryRepository.BindRandomVisibleSubCategory(records);
+            return Ok(result);
+        }
     }
 }

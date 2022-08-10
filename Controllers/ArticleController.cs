@@ -106,7 +106,8 @@ namespace FitnessWebAPI.Controllers
         public IActionResult BindVisibleArticle()
         {
             var result = _unitOfWork.ArticleRepository.BindVisibleArticle();
-            return Ok(result);
+            var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
+            return Ok(resultVM);
         }
 
         [HttpDelete("deletearticle/{id}")]
@@ -127,14 +128,16 @@ namespace FitnessWebAPI.Controllers
         public IActionResult ArticleById(int id)
         {
             var result = _unitOfWork.ArticleRepository.GetArticleById(id);
-            return Ok(result);
+            var resultVM = _mapper.Map<ArticleVM>(result);
+            return Ok(resultVM);
         }
 
         [HttpGet("bindVisibleArticleFrontend/{catId}")]
         public IActionResult BindVisibleArticleFrontend(int catId)
         {
             var result = _unitOfWork.ArticleRepository.BindVisibleArticleFrontend(catId);
-            return Ok(result);
+            var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
+            return Ok(resultVM);
         }
     }
 }

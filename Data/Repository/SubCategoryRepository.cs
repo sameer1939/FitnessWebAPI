@@ -59,5 +59,9 @@ namespace FitnessWebAPI.Data.Repository
         {
             return await _db.SubCategories.Where(x=>x.CategoryId==id && x.Visible==true).ToListAsync();
         }
+        public IEnumerable<SubCategory> BindRandomVisibleSubCategory(int records)
+        {
+            return _db.SubCategories.Where(x => x.Visible == true).OrderBy(x=>Guid.NewGuid()).AsNoTracking().Take(records);
+        }
     }
 }

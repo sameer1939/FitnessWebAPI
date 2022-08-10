@@ -15,5 +15,6 @@ namespace FitnessWebAPI.Data.IRepository
         SubCategory GetSubCategoryById(int id);
         Task<List<SubCategory>> GetSubCategoryByCategoryId(int id);
         void DeleteSubCategory(int id);
+        IEnumerable<SubCategory> BindRandomVisibleSubCategory(int records);
     }
 }
