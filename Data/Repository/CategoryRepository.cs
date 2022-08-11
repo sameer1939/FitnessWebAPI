@@ -1,5 +1,6 @@
 ﻿using FitnessWebAPI.Data.IRepository;
 using FitnessWebAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
