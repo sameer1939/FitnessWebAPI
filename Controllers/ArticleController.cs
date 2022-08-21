@@ -3,6 +3,7 @@ using FitnessWebAPI.Data.IRepository;
 using FitnessWebAPI.DTOs;
 using FitnessWebAPI.Models;
 using FitnessWebAPI.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,7 +15,6 @@ using System.Threading.Tasks;
 
 namespace FitnessWebAPI.Controllers
 {
-    
     public class ArticleController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -102,6 +102,7 @@ namespace FitnessWebAPI.Controllers
             var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
             return Ok(resultVM);
         }
+        [AllowAnonymous]
         [HttpGet("bindVisibleArticle")]
         public IActionResult BindVisibleArticle()
         {
@@ -124,6 +125,7 @@ namespace FitnessWebAPI.Controllers
             _unitOfWork.SaveChanges();
             return Ok();
         }
+        [AllowAnonymous]
         [HttpGet("articleById/{id}")]
         public IActionResult ArticleById(int id)
         {
@@ -132,10 +134,54 @@ namespace FitnessWebAPI.Controllers
             return Ok(resultVM);
         }
 
-        [HttpGet("bindVisibleArticleFrontend/{catId}")]
-        public IActionResult BindVisibleArticleFrontend(int catId)
+        [AllowAnonymous]
+        [HttpGet("bindVisibleArticleFrontend/{catId}/{take}")]
+        public IActionResult BindVisibleArticleFrontend(int catId,int take)
         {
-            var result = _unitOfWork.ArticleRepository.BindVisibleArticleFrontend(catId);
+            var result = _unitOfWork.ArticleRepository.BindVisibleArticleFrontend(catId, take);
+            var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
+            return Ok(resultVM);
+        }
+        [AllowAnonymous]
+        [HttpGet("bindVisibleArticleBySubCategoryId/{subCatId}/{take}")]
+        public IActionResult BindVisibleArticleBySubCategoryId(int subCatId, int take)
+        {
+            var result = _unitOfWork.ArticleRepository.BindVisibleArticleBySubCategoryId(subCatId, take);
+            var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
+            return Ok(resultVM);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("bindMoreVisibleArticleFrontend/{skp}/{take}")]
+        public IActionResult BindMoreVisibleArticleFrontend(int skp,int take)
+        {
+            var result = _unitOfWork.ArticleRepository.BindMoreVisibleArticleFrontend(skp,take);
+            var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
+            return Ok(resultVM);
+        }
+        [AllowAnonymous]
+        [HttpGet("updateViews/{id}")]
+        public IActionResult UpdateArticleViews(int id)
+        {
+            var art = _unitOfWork.ArticleRepository.GetArticleById(id);
+            if (art != null)
+            {
+                art.Views = (art.Views + 1);
+                _unitOfWork.ArticleRepository.UpdateArticle(art);
+                _unitOfWork.SaveChanges();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest("Data not found");
+            }
+            
+        }
+        [AllowAnonymous]
+        [HttpGet("bindTopPopularArticles/{take}")]
+        public IActionResult BindTopPopularArticles(int take)
+        {
+            var result = _unitOfWork.ArticleRepository.BindTopPopularArticles(take);
             var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
             return Ok(resultVM);
         }

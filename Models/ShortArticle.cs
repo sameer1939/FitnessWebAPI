@@ -15,6 +15,7 @@ namespace FitnessWebAPI.Models
         public string ArticleInHindi { get; set; }
         public string Image { get; set; }
         public bool Visible { get; set; }
+        public int Views { get; set; }
         public SubCategory SubCategory { get; set; }
     }
 }

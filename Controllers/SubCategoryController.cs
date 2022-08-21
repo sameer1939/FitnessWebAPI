@@ -2,6 +2,7 @@
 using FitnessWebAPI.Data.IRepository;
 using FitnessWebAPI.DTOs;
 using FitnessWebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace FitnessWebAPI.Controllers
             var subCategoryList = _mapper.Map<IEnumerable<SubCategoryListDTO>>(result);
             return Ok(subCategoryList);
         }
+        [AllowAnonymous]
         [HttpGet("bindVisibleSubCategory")]
         public IActionResult BindVisibleSubCategory()
         {
@@ -60,18 +62,24 @@ namespace FitnessWebAPI.Controllers
             _unitOfWork.SaveChanges();
             return Ok();
         }
+
+        [AllowAnonymous]
         [HttpGet("subCategoryById/{id}")]
         public IActionResult SubCategoryById(int id)
         {
             var result = _unitOfWork.SubCategoryRepository.GetSubCategoryById(id);
             return Ok(result);
         }
+
+        [AllowAnonymous]
         [HttpGet("getbyCategoryId/{id}")]
         public async Task<IActionResult> GetSubCategoryByCategoryId(int id)
         {
             var result = await _unitOfWork.SubCategoryRepository.GetSubCategoryByCategoryId(id);
             return Ok(result);
         }
+
+        [AllowAnonymous]
         [HttpGet("bindRandomVisibleSubCategory/{records}")]
         public IActionResult BindRandomVisibleSubCategory(int records)
         {

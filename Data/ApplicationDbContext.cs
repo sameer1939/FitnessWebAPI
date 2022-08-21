@@ -13,5 +13,6 @@ namespace FitnessWebAPI.Data
         public DbSet<User> Users { get; set; }
         public DbSet<SubCategory> SubCategories { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Subscriber> Subscribers { get; set; }
     }
 }

@@ -57,11 +57,11 @@ namespace FitnessWebAPI.Data.Repository
         }
         public async Task<List<SubCategory>> GetSubCategoryByCategoryId(int id)
         {
-            return await _db.SubCategories.Where(x=>x.CategoryId==id && x.Visible==true).ToListAsync();
+            return await _db.SubCategories.Where(x=>x.CategoryId==id && x.Visible==true).Include(x=>x.Category).ToListAsync();
         }
         public IEnumerable<SubCategory> BindRandomVisibleSubCategory(int records)
         {
-            return _db.SubCategories.Where(x => x.Visible == true).OrderBy(x=>Guid.NewGuid()).AsNoTracking().Take(records);
+            return _db.SubCategories.Where(x => x.Visible == true).Include(x=>x.Category).OrderBy(x=>Guid.NewGuid()).AsNoTracking().Take(records);
         }
     }
 }

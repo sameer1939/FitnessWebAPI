@@ -2,6 +2,7 @@
 using FitnessWebAPI.Data.IRepository;
 using FitnessWebAPI.DTOs;
 using FitnessWebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace FitnessWebAPI.Controllers
 {
-    
+
     public class CategoryController : BaseController
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -95,6 +96,7 @@ namespace FitnessWebAPI.Controllers
             var result = _unitOfWork.CategoryRepository.CategoryList();
             return Ok(result);
         }
+        [AllowAnonymous]
         [HttpGet("bindVisibleCategory")]
         public IActionResult BindVisibleCategory()
         {
@@ -109,6 +111,7 @@ namespace FitnessWebAPI.Controllers
             _unitOfWork.SaveChanges();
             return Ok();
         }
+        [AllowAnonymous]
         [HttpGet("categoryById/{id}")]
         public IActionResult CategoryById(int id)
         {

@@ -10,6 +10,8 @@ namespace FitnessWebAPI.Data.IRepository
         public ICategoryRepository CategoryRepository { get; }
         public ISubCategoryRepository SubCategoryRepository { get; }
         public IArticleRepository ArticleRepository { get; }
+        public IUserRepository UserRepository { get; }
+        public ISubscribersRepository SubscribersRepository { get; }
         void SaveChanges();
     }
 }

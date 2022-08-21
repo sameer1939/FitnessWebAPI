@@ -10,6 +10,7 @@ namespace FitnessWebAPI.ViewModels
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
+        public int SubCategoryId { get; set; }
         public string SubCategoryName { get; set; }
         public string Heading { get; set; }
         public string ShortArticle { get; set; }
