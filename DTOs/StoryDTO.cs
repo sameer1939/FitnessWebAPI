@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace FitnessWebAPI.DTOs
 {
-    public class SubCategoryDTO
+    public class StoryDTO
     {
         public int Id { get; set; }
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string SubCategoryName { get; set; }
+        public string VideoTitle { get; set; }
+        public string VideoUrl { get; set; }
         public bool? Visible { get; set; }
-        public int CntArticles { get; set; }
+
     }
 }

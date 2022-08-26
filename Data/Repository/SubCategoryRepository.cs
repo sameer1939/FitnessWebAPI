@@ -1,4 +1,5 @@
 ﻿using FitnessWebAPI.Data.IRepository;
+using FitnessWebAPI.DTOs;
 using FitnessWebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -55,13 +56,41 @@ namespace FitnessWebAPI.Data.Repository
             cat.Visible = category.Visible;
             _db.SubCategories.Update(cat);
         }
-        public async Task<List<SubCategory>> GetSubCategoryByCategoryId(int id)
+        public async Task<List<SubCategoryDTO>> GetSubCategoryByCategoryId(int id)
         {
-            return await _db.SubCategories.Where(x=>x.CategoryId==id && x.Visible==true).Include(x=>x.Category).ToListAsync();
+
+            var result = await (from s in _db.SubCategories
+                          join c in _db.Categories on s.CategoryId equals c.Id
+                          where s.Visible==true && s.CategoryId == id
+                          select new SubCategoryDTO
+                          {
+                              Id = s.Id,
+                              SubCategoryName = s.SubCategoryName,
+                              CategoryId = s.CategoryId,
+                              Visible = s.Visible,
+                              CntArticles = _db.Articles.Where(x => x.SubCategoryId == s.Id).Count(),
+                              CategoryName = c.Name
+                          }).ToListAsync();
+
+            return result;
         }
-        public IEnumerable<SubCategory> BindRandomVisibleSubCategory(int records)
+        public IEnumerable<SubCategoryDTO> BindRandomVisibleSubCategory(int records)
         {
-            return _db.SubCategories.Where(x => x.Visible == true).Include(x=>x.Category).OrderBy(x=>Guid.NewGuid()).AsNoTracking().Take(records);
+            var result = (from s in _db.SubCategories
+                          join c in _db.Categories on s.CategoryId equals c.Id
+                          where s.Visible == true
+                          select new SubCategoryDTO
+                          {
+                              Id=s.Id,
+                              SubCategoryName = s.SubCategoryName,
+                              CategoryId = s.CategoryId,
+                              Visible=s.Visible,
+                              CntArticles = _db.Articles.Where(x=>x.SubCategoryId==s.Id).Count(),
+                              CategoryName = c.Name
+                          }).OrderBy(x => Guid.NewGuid()).AsNoTracking().Take(records);
+
+            //return _db.SubCategories.Where(x => x.Visible == true).Include(x=>x.Category);
+            return result;
         }
     }
 }

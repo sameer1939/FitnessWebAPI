@@ -17,6 +17,8 @@ namespace FitnessWebAPI.ViewModels
         public string ArticleInEnglish { get; set; }
         public string ArticleInHindi { get; set; }
         public string Image { get; set; }
+        public string TotalViews { get; set; }
         public bool Visible { get; set; }
+        public DateTime InsertedDate { get; set; }
     }
 }

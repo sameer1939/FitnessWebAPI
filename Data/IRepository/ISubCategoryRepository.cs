@@ -1,4 +1,5 @@
-﻿using FitnessWebAPI.Models;
+﻿using FitnessWebAPI.DTOs;
+using FitnessWebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace FitnessWebAPI.Data.IRepository
         IEnumerable<SubCategory> SubCategoryList();
         IEnumerable<SubCategory> BindVisibleSubCategory();
         SubCategory GetSubCategoryById(int id);
-        Task<List<SubCategory>> GetSubCategoryByCategoryId(int id);
+        Task<List<SubCategoryDTO>> GetSubCategoryByCategoryId(int id);
         void DeleteSubCategory(int id);
-        IEnumerable<SubCategory> BindRandomVisibleSubCategory(int records);
+        IEnumerable<SubCategoryDTO> BindRandomVisibleSubCategory(int records);
     }
 }

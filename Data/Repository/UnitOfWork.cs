@@ -10,6 +10,7 @@ namespace FitnessWebAPI.Data.Repository
         public IArticleRepository ArticleRepository { get; }
         public IUserRepository UserRepository { get; }
         public ISubscribersRepository SubscribersRepository { get; }
+        public IStoriesRepository StoriesRepository { get; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -19,6 +20,7 @@ namespace FitnessWebAPI.Data.Repository
             ArticleRepository = new ArticleRepository(_db);
             UserRepository = new UserRepository(_db);
             SubscribersRepository = new SubscribersRepository(_db);
+            StoriesRepository = new StoriesRepository(_db);
         }
 
         public void SaveChanges()
