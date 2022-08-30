@@ -9,6 +9,8 @@ namespace FitnessWebAPI.Models
     {
         public string VideoTitle { get; set; }
         public string VideoUrl { get; set; }
+        public string ImageUrl { get; set; }
         public bool? Visible { get; set; }
+
     }
 }

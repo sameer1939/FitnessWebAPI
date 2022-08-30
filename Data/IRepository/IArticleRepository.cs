@@ -18,5 +18,6 @@ namespace FitnessWebAPI.Data.IRepository
         IEnumerable<Article> BindVisibleArticleBySubCategoryId(int subCatId,int take);
         IEnumerable<Article> BindMoreVisibleArticleFrontend(int skp, int take);
         IEnumerable<Article> BindTopPopularArticles(int take);
+        IEnumerable<Article> BindBasicArticleforHome(int take);
     }
 }

@@ -28,6 +28,7 @@ namespace FitnessWebAPI.Controllers
             story.Visible = dtos.Visible;
             story.VideoUrl = dtos.VideoUrl;
             story.VideoTitle = dtos.VideoTitle;
+            story.ImageUrl = dtos.ImageUrl;
             _unitOfWork.StoriesRepository.AddStory(story);
             _unitOfWork.SaveChanges();
             return Ok();
@@ -41,6 +42,7 @@ namespace FitnessWebAPI.Controllers
             st.VideoTitle = storyDTO.VideoTitle;
             st.Visible = storyDTO.Visible;
             st.VideoUrl = storyDTO.VideoUrl;
+            st.ImageUrl = storyDTO.ImageUrl;
 
             _unitOfWork.StoriesRepository.UpdateStory(st);
             _unitOfWork.SaveChanges();

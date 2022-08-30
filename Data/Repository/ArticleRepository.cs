@@ -63,5 +63,10 @@ namespace FitnessWebAPI.Data.Repository
         {
                 return _db.Articles.Where(x => x.Visible == true).OrderByDescending(x => x.Views).Take(take).Include(x => x.SubCategory).ThenInclude(x => x.Category).ToList();
         }
+        public IEnumerable<Article> BindBasicArticleforHome(int take)
+        {
+            var result = _db.Articles.Where(x => x.Visible == true).Include(x => x.SubCategory).ThenInclude(x => x.Category);
+            return result.Where(x => x.SubCategory.Category.Name == "Basics").Take(take).ToList();
+        }
     }
 }

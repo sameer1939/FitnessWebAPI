@@ -15,5 +15,6 @@ namespace FitnessWebAPI.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<Story> Stories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 }

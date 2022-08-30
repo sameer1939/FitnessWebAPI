@@ -185,5 +185,14 @@ namespace FitnessWebAPI.Controllers
             var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
             return Ok(resultVM);
         }
+
+        [AllowAnonymous]
+        [HttpGet("bindBasicArticleforHome/{take}")]
+        public IActionResult BindBasicArticleforHome(int take)
+        {
+            var result = _unitOfWork.ArticleRepository.BindBasicArticleforHome(take);
+            var resultVM = _mapper.Map<IEnumerable<ArticleVM>>(result);
+            return Ok(resultVM);
+        }
     }
 }

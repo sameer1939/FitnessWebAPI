@@ -90,7 +90,7 @@ namespace FitnessWebAPI.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddHours(5),
                 SigningCredentials = signingCredentials
             };
             var tokenHandler = new JwtSecurityTokenHandler();
